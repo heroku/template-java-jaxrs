@@ -1,16 +1,21 @@
+import com.sun.grizzly.http.SelectorThread;
 import com.sun.jersey.api.container.grizzly.GrizzlyServerFactory;
 import com.sun.jersey.api.core.PackagesResourceConfig;
 
 import javax.ws.rs.core.UriBuilder;
 import java.io.IOException;
 import java.net.URI;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class Main {
 
+    private static final Logger logger = Logger.getLogger(Main.class.getName());
     private static final int DEFAULT_PORT = 9998;
 
     public static void main(String[] args) throws IOException {
-        GrizzlyServerFactory.create(getBaseUri(), getResourceConfig());
+        final SelectorThread server = GrizzlyServerFactory.create(getBaseUri(), getResourceConfig());
+        logger.log(Level.INFO, "Grizzly started on port: " + server.getPort());
     }
 
     private static URI getBaseUri() {
