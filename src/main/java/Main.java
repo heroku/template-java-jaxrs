@@ -1,21 +1,24 @@
+import com.sun.jersey.api.container.grizzly.GrizzlyServerFactory;
+import com.sun.jersey.api.core.PackagesResourceConfig;
 
+import javax.ws.rs.core.UriBuilder;
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
-
-import com.sun.grizzly.http.SelectorThread;
-import com.sun.jersey.api.container.grizzly.GrizzlyWebContainerFactory;
+import java.net.URI;
 
 public class Main {
-    public static void main(String[] args) throws IOException {
-        
-        final String baseUri = "http://localhost:"+(System.getenv("PORT")!=null?System.getenv("PORT"):"9998")+"/";
-        final Map<String, String> initParams = new HashMap<String, String>();
 
-        initParams.put("com.sun.jersey.config.property.packages","resources");
-        
-        System.out.println("Starting grizzly...");
-        SelectorThread threadSelector = GrizzlyWebContainerFactory.create(baseUri, initParams);
-        System.out.println(String.format("Jersey started with WADL available at %sapplication.wadl.",baseUri, baseUri));
+    private static final int DEFAULT_PORT = 9998;
+
+    public static void main(String[] args) throws IOException {
+        GrizzlyServerFactory.create(getBaseUri(), getResourceConfig());
+    }
+
+    private static URI getBaseUri() {
+        final int port = System.getenv("PORT") != null ? Integer.parseInt(System.getenv("PORT")) : DEFAULT_PORT;
+        return UriBuilder.fromUri("http://localhost/").port(port).build();
+    }
+
+    private static PackagesResourceConfig getResourceConfig() {
+        return new PackagesResourceConfig("resources");
     }
 }
