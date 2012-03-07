@@ -4,6 +4,7 @@ import org.codehaus.jackson.map.ObjectMapper;
 
 import javax.xml.bind.annotation.XmlRootElement;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URISyntaxException;
@@ -22,7 +23,16 @@ public class Step {
 
     public static Step fromFile(String id) throws IOException {
         final InputStream stepStream = ClassLoader.getSystemResourceAsStream("steps" + System.getProperty("file.separator") + id + ".json");
-        return new ObjectMapper().readValue(stepStream, Step.class);
+
+        if (stepStream == null) {
+            throw new FileNotFoundException();
+        }
+        
+        try {
+            return new ObjectMapper().readValue(stepStream, Step.class);
+        } finally {
+            stepStream.close();
+        }
     }
 
     public static List<Step> fromAllFiles() throws URISyntaxException, IOException {

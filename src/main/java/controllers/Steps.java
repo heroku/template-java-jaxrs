@@ -5,6 +5,9 @@ import models.Step;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
+import javax.ws.rs.WebApplicationException;
+import javax.ws.rs.core.Response;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.util.List;
@@ -20,6 +23,10 @@ public class Steps {
     @GET
     @Path("/{id}")
     public static Step getStep(@PathParam("id") String id) throws IOException {
-        return Step.fromFile(id);
+        try {
+            return Step.fromFile(id);
+        } catch (FileNotFoundException e) {
+            throw new WebApplicationException(Response.Status.NOT_FOUND);
+        }
     }
 }
