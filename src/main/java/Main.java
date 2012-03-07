@@ -15,7 +15,7 @@ public class Main {
         final GrizzlyWebServer gws = new GrizzlyWebServer(getPort());
 
         final ServletAdapter jerseyAdapter = new ServletAdapter(ClassLoader.getSystemResource("static").getFile());
-        jerseyAdapter.addInitParameter("com.sun.jersey.config.property.packages", "controllers");
+        jerseyAdapter.addInitParameter("com.sun.jersey.config.property.packages", "services");
         jerseyAdapter.addInitParameter("com.sun.jersey.api.json.POJOMappingFeature", "true");
         jerseyAdapter.setContextPath("/");
         jerseyAdapter.setHandleStaticResources(true);
