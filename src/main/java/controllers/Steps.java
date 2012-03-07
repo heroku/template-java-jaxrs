@@ -17,14 +17,14 @@ public class Steps {
 
     @GET
     public static List<Step> index() throws IOException, URISyntaxException {
-        return Step.fromAllFiles();
+        return Step.findAll();
     }
 
     @GET
     @Path("/{id}")
     public static Step getStep(@PathParam("id") String id) throws IOException {
         try {
-            return Step.fromFile(id);
+            return Step.findById(id);
         } catch (FileNotFoundException e) {
             throw new WebApplicationException(Response.Status.NOT_FOUND);
         }

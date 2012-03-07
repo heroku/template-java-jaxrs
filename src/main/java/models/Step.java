@@ -21,7 +21,7 @@ public class Step {
 
     public Step() {}
 
-    public static Step fromFile(String id) throws IOException {
+    public static Step findById(String id) throws IOException {
         final InputStream stepStream = ClassLoader.getSystemResourceAsStream("steps" + System.getProperty("file.separator") + id + ".json");
 
         if (stepStream == null) {
@@ -35,7 +35,7 @@ public class Step {
         }
     }
 
-    public static List<Step> fromAllFiles() throws URISyntaxException, IOException {
+    public static List<Step> findAll() throws URISyntaxException, IOException {
         final List<Step> steps = new ArrayList<Step>();
         final ObjectMapper mapper = new ObjectMapper();
         final File stepsDir = new File(ClassLoader.getSystemResource("steps").toURI());
