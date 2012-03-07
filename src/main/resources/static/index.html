@@ -10,6 +10,7 @@
 
     <link href="http://twitter.github.com/bootstrap/assets/css/bootstrap.css" rel="stylesheet">
     <link href="http://twitter.github.com/bootstrap/assets/css/bootstrap-responsive.css" rel="stylesheet">
+    <link href="http://twitter.github.com/bootstrap/assets/js/google-code-prettify/prettify.css" rel="stylesheet">
 
     <!--
     IMPORTANT:
@@ -73,20 +74,37 @@
             $(eid).show();
         }
 
-        function getTime() {
+        function showRestResults(label, labelClass, bodyText) {
+            $('#rest-result-label').text(label);
+            $('#rest-result-label').removeClass('label-important').removeClass('label-success');
+            $('#rest-result-label').addClass(labelClass);
 
-            var timezone = $('#requested-timezone').val();
+            $('#rest-result').text(bodyText);
+            prettyPrint();
+
+            $('#rest-result-label').show();
+            $('#rest-result').show();
+        }
+
+        function sendGetRequest() {
+            var url = $('#rest-url').val();
+
+            if (url.indexOf('/time') != 0) {
+                $('#rest-result').text('Invalid URL');
+                return false;
+            }
 
             $.ajax({
-                url: '/time/' + timezone,
-                dataType:'text',
+                url: url,
+                dataType:'json',
                 context: document.body,
-                success: function( data ){
-                    $('#time-result').html(data);
+                success: function(data, textStatus, jqXHR) {
+                    showRestResults('Success', 'label-success', JSON.stringify(data, undefined, 2));
+                },
+                error: function(qXHR, textStatus, errorThrown) {
+                    showRestResults(textStatus, 'label-important', errorThrown);
                 }
             });
-
-            return false;
         }
         // -->
     </script>
@@ -117,12 +135,24 @@
     <h1>Get started with JAX-RS</h1>
 </div>
 
-<div id="time-service-widget">
-    <form name="time-request">
-        <input id="requested-timezone">
-        <input type="button" value="Request Time" onclick="getTime();">
+<div id="rest-client-widget" class="well">
+    <form class="form-horizontal">
+        <fieldset>
+            <legend>REST API Client</legend>
+            <label class="control-label search-query" for="rest-url">URL</label>
+            <input class="input-xlarge" id="rest-url" type="text" value="/time/GMT">
+            <button type="submit" class="btn btn-primary" onclick="sendGetRequest(); return false;">GET</button>
+        </fieldset>
     </form>
-    <code id="time-result"></code>
+
+    <div class="row">
+        <div class="row">
+            <div id="rest-result-label" class="offset2 span1 label" style="text-align: center; margin-bottom: 1%; display: none"></div>
+        </div>
+        <div class="row">
+            <pre id="rest-result" class="offset2 span4 prettyprint linenums" style="display: none;"></pre>
+        </div>
+    </div>
 </div>
 
 <div class="row tool-choice">
@@ -360,5 +390,6 @@ Authentication successful.</pre>
 
 <script src="http://twitter.github.com/bootstrap/assets/js/jquery.js"></script>
 <script src="http://twitter.github.com/bootstrap/assets/js/bootstrap-modal.js"></script>
+<script src="http://twitter.github.com/bootstrap/assets/js/google-code-prettify/prettify.js"></script>
 </body>
 </html>
