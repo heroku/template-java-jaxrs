@@ -26,7 +26,7 @@ public class Main {
 
     private static Map<String, String> getInitParams() {
         final Map<String, String> initParams = new HashMap<String, String>();
-        initParams.put("com.sun.jersey.config.property.packages", "resources");
+        initParams.put("com.sun.jersey.config.property.packages", "controllers");
         initParams.put("com.sun.jersey.api.json.POJOMappingFeature", "true");
         return initParams;
     }
