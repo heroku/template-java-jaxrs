@@ -112,7 +112,7 @@
     </script>
 </head>
 
-<body>
+<body onload="prettyPrint();">
 
 <div class="navbar navbar-fixed-top">
     <div class="navbar-inner">
@@ -140,9 +140,8 @@
 <div id="rest-client-widget" class="well">
     <h3>RESTful Time Service</h3>
     <p>
-        This app is a simple RESTful time service. Use the widget below to interact with it as a client.
-        Send a <code>GET</code> request to <code>/time</code> to see the current time.
-        The time zone can also be specified by appending a time zone id, such as <code>/time/est</code>.
+        This app is a simple RESTful time service.
+        Try sending a <code>GET</code> request to <code>/time</code> to see the current time.
     </p>
     <form class="form-horizontal" class="row-fluid">
         <fieldset>
@@ -160,9 +159,25 @@
             </div>
         </div>
         <div class="row">
-            <pre id="rest-result-body" class="offset2 span4 prettyprint linenums"></pre>
+            <pre id="rest-result-body" class="offset2 span4 prettyprint linenums language-json"></pre>
         </div>
     </div>
+</div>
+
+<div class="well">
+    <h4>Enhance the Service</h4>
+    <p>
+        What if you want the service to support multiple time zones?
+        Just add the method below to <code>TimeService.java</code> and try requesting
+        something like <code>/time/est</code> to get the time in Eastern Standard Time.
+    </p>
+    <pre class="prettyprint linenums language-java">
+    @GET
+    @Path("/{timezone}")
+    public Time get(@PathParam("timezone") String timezone) {
+        return new Time(TimeZone.getTimeZone(timezone.toUpperCase()));
+    }
+    </pre>
 </div>
 
 <div class="row tool-choice hide">
