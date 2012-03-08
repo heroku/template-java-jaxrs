@@ -74,6 +74,24 @@
             $(eid).show();
         }
 
+        function sendGetRequest() {
+            $.ajax({
+                url: $('#rest-url').val(),
+                dataType:'json',
+                context: document.body,
+                success: function(data, textStatus, jqXHR) {
+                    showRestResults('Success', 'label-success', JSON.stringify(data, undefined, 2));
+                },
+                error: function(qXHR, textStatus, errorThrown) {
+                    if (errorThrown instanceof SyntaxError) {
+                        errorThrown = errorThrown.message;
+                    }
+
+                    showRestResults(textStatus, 'label-important', errorThrown);
+                }
+            });
+        }
+
         function showRestResults(label, labelClass, bodyText) {
             $('#rest-result-label').text(label);
             $('#rest-result-label').removeClass('label-important').removeClass('label-success');
@@ -84,27 +102,6 @@
 
             $('#rest-result-label').show();
             $('#rest-result').show();
-        }
-
-        function sendGetRequest() {
-            var url = $('#rest-url').val();
-
-            if (url.indexOf('/time') != 0) {
-                $('#rest-result').text('Invalid URL');
-                return false;
-            }
-
-            $.ajax({
-                url: url,
-                dataType:'json',
-                context: document.body,
-                success: function(data, textStatus, jqXHR) {
-                    showRestResults('Success', 'label-success', JSON.stringify(data, undefined, 2));
-                },
-                error: function(qXHR, textStatus, errorThrown) {
-                    showRestResults(textStatus, 'label-important', errorThrown);
-                }
-            });
         }
         // -->
     </script>
