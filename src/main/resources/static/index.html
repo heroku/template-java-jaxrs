@@ -168,15 +168,15 @@
     <h4>Enhance the Service</h4>
     <p>
         What if you want the service to support multiple time zones?
-        Just add the method below to <code>TimeService.java</code> and try requesting
+        Just add the method below to <code>TimeService.java</code> and then try requesting
         something like <code>/time/est</code> to get the time in Eastern Standard Time.
     </p>
     <pre class="prettyprint linenums language-java">
-    @GET
-    @Path("/{timezone}")
-    public Time get(@PathParam("timezone") String timezone) {
-        return new Time(TimeZone.getTimeZone(timezone.toUpperCase()));
-    }
+@GET
+@Path("/{timezone}")
+public Time get(@PathParam("timezone") String timezone) {
+    return new Time(TimeZone.getTimeZone(timezone.toUpperCase()));
+}
     </pre>
 </div>
 
