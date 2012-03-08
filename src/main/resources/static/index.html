@@ -57,8 +57,8 @@
             cursor: pointer;
         }
 
-        #rest-result-label {
-            text-align: center;
+        #rest-result-header {
+            /*text-align: center;*/
             margin-bottom: 1%;
         }
 
@@ -86,28 +86,27 @@
                 dataType:'json',
                 context: document.body,
                 success: function(data, textStatus, jqXHR) {
-                    showRestResults('Success', 'label-success', JSON.stringify(data, undefined, 2));
+                    showRestResults('Success', 'alert-success', JSON.stringify(data, undefined, 2));
                 },
                 error: function(qXHR, textStatus, errorThrown) {
                     if (errorThrown instanceof SyntaxError) {
                         errorThrown = errorThrown.message;
                     }
 
-                    showRestResults(textStatus, 'label-important', errorThrown);
+                    showRestResults(textStatus, 'alert-error', errorThrown);
                 }
             });
         }
 
-        function showRestResults(label, labelClass, bodyText) {
-            $('#rest-result-label').text(label);
-            $('#rest-result-label').removeClass('label-important').removeClass('label-success');
-            $('#rest-result-label').addClass(labelClass);
+        function showRestResults(headerText, headerClass, bodyText) {
+            $('#rest-result-header-text').text(headerText);
+            $('#rest-result-header').removeClass('alert-error').removeClass('alert-success');
+            $('#rest-result-header').addClass(headerClass);
 
-            $('#rest-result').text(bodyText);
+            $('#rest-result-body').text(bodyText);
             prettyPrint();
 
-            $('#rest-result-label').show();
-            $('#rest-result').show();
+            $('#rest-result-container').show();
         }
         // -->
     </script>
@@ -153,12 +152,15 @@
         </fieldset>
     </form>
 
-    <div class="row">
+    <div id="rest-result-container" class="row hide">
         <div class="row">
-            <div id="rest-result-label" class="offset2 span1 label hide"></div>
+            <div id="rest-result-header" class="offset2 span1 alert">
+                <a id="rest-result-close-btn" class="close" data-dismiss="alert" onclick="$('#rest-result-container').hide();">×</a>
+                <span id="rest-result-header-text"></span>
+            </div>
         </div>
         <div class="row">
-            <pre id="rest-result" class="offset2 span4 prettyprint linenums hide"></pre>
+            <pre id="rest-result-body" class="offset2 span4 prettyprint linenums"></pre>
         </div>
     </div>
 </div>
