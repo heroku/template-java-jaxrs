@@ -24,7 +24,7 @@ public class Time {
 
         this.timezone = now.getTimeZone().getDisplayName();
         this.year = now.get(Calendar.YEAR);
-        this.month = now.get(Calendar.MONTH);
+        this.month = now.get(Calendar.MONTH) + 1;
         this.day = now.get(Calendar.DATE);
         this.hour = now.get(Calendar.HOUR);
         this.minute = now.get(Calendar.MINUTE);
