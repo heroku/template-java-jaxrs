@@ -108,11 +108,16 @@
 
             $('#rest-result-container').show();
         }
+
+        function prettyPrintOnce() {
+            prettyPrint();
+            $('.prettyprint.once').removeClass('prettyprint');
+        }
         // -->
     </script>
 </head>
 
-<body onload="prettyPrint();">
+<body onload="prettyPrintOnce();">
 
 <div class="navbar navbar-fixed-top">
     <div class="navbar-inner">
@@ -171,7 +176,7 @@
         Just add the method below to <code>TimeService.java</code> and then try requesting
         something like <code>/time/est</code> to get the time in Eastern Standard Time.
     </p>
-    <pre class="prettyprint linenums language-java">
+    <pre class="prettyprint once linenums language-java">
 @GET
 @Path("/{timezone}")
 public Time get(@PathParam("timezone") String timezone) {
