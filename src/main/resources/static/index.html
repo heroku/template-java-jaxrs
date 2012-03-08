@@ -144,10 +144,10 @@
         Send a <code>GET</code> request to <code>/time</code> to see the current time.
         The time zone can also be specified by appending a time zone id, such as <code>/time/est</code>.
     </p>
-    <form class="form-horizontal">
+    <form class="form-horizontal" class="row-fluid">
         <fieldset>
             <label class="control-label search-query" for="rest-url">URL</label>
-            <input class="input-xlarge" id="rest-url" type="text" value="/time">
+            <input class="input-large" id="rest-url" type="text" value="/time">
             <button type="submit" class="btn btn-primary" onclick="sendGetRequest(); return false;">GET</button>
         </fieldset>
     </form>
