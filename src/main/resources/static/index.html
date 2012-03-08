@@ -164,7 +164,7 @@
             </div>
         </div>
         <div class="row">
-            <pre id="rest-result-body" class="offset2 span4 prettyprint linenums language-json"></pre>
+            <pre id="rest-result-body" class="offset2 span4 prettyprint language-json"></pre>
         </div>
     </div>
 </div>
@@ -172,11 +172,11 @@
 <div class="well">
     <h4>Enhance the Service</h4>
     <p>
-        What if you want the service to support multiple time zones?
+        Want the service to support multiple time zones?
         Just add the method below to <code>TimeService.java</code> and then try requesting
         something like <code>/time/est</code> to get the time in Eastern Standard Time.
     </p>
-    <pre class="prettyprint once linenums language-java">
+    <pre class="prettyprint once language-java">
 @GET
 @Path("/{timezone}")
 public Time get(@PathParam("timezone") String timezone) {
