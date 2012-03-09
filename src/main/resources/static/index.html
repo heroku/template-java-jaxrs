@@ -59,6 +59,15 @@
             $(eid).show();
         }
 
+        function initDefaultRestUrl() {
+            var url = '/time';
+            var param = 'default_rest_url=';
+            if (location.href.indexOf(param) > -1) {
+                url = location.href.substring(location.href.indexOf(param) + param.length);
+            }
+            $('#rest-url').val(url)
+        }
+
         function sendGetRequest() {
             $.ajax({
                 url: $('#rest-url').val(),
@@ -121,7 +130,7 @@
     <h1>Get started with JAX-RS</h1>
 </div>
 
-<div style="margin: 10px">
+<div style="margin-bottom: 20px">
     This app is a simple RESTful service for getting the current time with JAX-RS.
     Use the REST Client below to send a <code>GET</code> request to <code>/time</code>.
     Then use Eclipse or the Command Line to deploy some changes.
@@ -141,7 +150,7 @@
         <form class="form-horizontal" class="row-fluid">
             <fieldset>
                 <label class="control-label search-query" for="rest-url"><strong>URL</strong></label>
-                <input id="rest-url" type="text" value="/time">
+                <input id="rest-url" type="text">
                 <button type="submit" class="btn btn-primary" onclick="sendGetRequest(); return false;">GET</button>
             </fieldset>
         </form>
@@ -320,7 +329,7 @@ public Time get(@PathParam("timezone") String timezone) {
     <div class="hero-unit">
         <h1>Done!</h1>
         <p>You've just cloned, modified, and deployed a brand new app.</p>
-        <a href="/" class="btn btn-primary btn-large">See your changes</a>
+        <a href="/?default_rest_url=/time/est" class="btn btn-primary btn-large">See your changes</a>
     </div>
 </div> <!-- End Eclipse tab-->
 
@@ -379,7 +388,7 @@ public Time get(@PathParam("timezone") String timezone) {
     <div class="hero-unit">
         <h1>Done!</h1>
         <p>You've just cloned, modified, and deployed a brand new app.</p>
-        <a href="/" class="btn btn-primary btn-large">See your changes</a>
+        <a href="/?default_rest_url=/time/est" class="btn btn-primary btn-large">See your changes</a>
     </div>
 </div> <!-- End CLI tab -->
 
@@ -401,5 +410,10 @@ public Time get(@PathParam("timezone") String timezone) {
 <script src="http://twitter.github.com/bootstrap/assets/js/bootstrap-tab.js"></script>
 <script src="http://twitter.github.com/bootstrap/assets/js/bootstrap-modal.js"></script>
 <script src="http://twitter.github.com/bootstrap/assets/js/google-code-prettify/prettify.js"></script>
+<script type="text/javascript">
+    $(function() {
+        initDefaultRestUrl();
+    });
+</script>
 </body>
 </html>
