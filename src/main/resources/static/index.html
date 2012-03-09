@@ -56,12 +56,6 @@
         .tool-choice a img {
             cursor: pointer;
         }
-
-        #rest-result-header {
-            /*text-align: center;*/
-            margin-bottom: 1%;
-        }
-
     </style>
     <!-- /// -->
     <script type="text/javascript">
@@ -142,63 +136,46 @@
     <h1>Get started with JAX-RS</h1>
 </div>
 
-<div id="rest-client-widget" class="well">
-    <h3>RESTful Time Service</h3>
-    <p>
-        This app is a simple RESTful time service.
-        Try sending a <code>GET</code> request to <code>/time</code> to see the current time.
-    </p>
-    <form class="form-horizontal" class="row-fluid">
-        <fieldset>
-            <label class="control-label search-query" for="rest-url">URL</label>
-            <input id="rest-url" type="text" value="/time">
-            <button type="submit" class="btn btn-primary" onclick="sendGetRequest(); return false;">GET</button>
-        </fieldset>
-    </form>
+<div style="margin: 10px">
+    This app is a simple RESTful service for getting the current time with JAX-RS.
+    Use the REST Client below to send a <code>GET</code> request to <code>/time</code>.
+    Then use Eclipse or the Command Line to deploy some changes.
+</div>
 
-    <div id="rest-result-container" class="row hide">
-        <div class="row">
-            <div id="rest-result-header" class="offset2 span1 alert">
-                <a id="rest-result-close-btn" class="close" data-dismiss="alert" onclick="$('#rest-result-container').hide();">×</a>
-                <span id="rest-result-header-text"></span>
+<ul id="tab" class="nav nav-tabs">
+    <li class="active"><a href="#rest-client" data-toggle="tab">REST Client</a></li>
+    <li><a href="#eclipse-instructions" data-toggle="tab">Use Eclipse</a></li>
+    <li><a href="#cli-instructions" data-toggle="tab">Use Command Line</a></li>
+</ul>
+
+<div class="tab-content">
+
+<div id="rest-client" class="tab-pane active">
+    <h1>REST Client</h1>
+    <div id="rest-client-widget" style="margin: 10px">
+        <form class="form-horizontal" class="row-fluid">
+            <fieldset>
+                <label class="control-label search-query" for="rest-url"><strong>URL</strong></label>
+                <input id="rest-url" type="text" value="/time">
+                <button type="submit" class="btn btn-primary" onclick="sendGetRequest(); return false;">GET</button>
+            </fieldset>
+        </form>
+
+        <div id="rest-result-container" class="row hide">
+            <div class="row">
+                <div id="rest-result-header" class="offset2 span1 alert">
+                    <a id="rest-result-close-btn" class="close" data-dismiss="alert" onclick="$('#rest-result-container').hide();">×</a>
+                    <span id="rest-result-header-text"></span>
+                </div>
+            </div>
+            <div class="row">
+                <pre id="rest-result-body" class="offset2 span4 prettyprint language-json"></pre>
             </div>
         </div>
-        <div class="row">
-            <pre id="rest-result-body" class="offset2 span4 prettyprint language-json"></pre>
-        </div>
     </div>
 </div>
 
-<div class="well">
-    <h4>Enhance the Service</h4>
-    <p>
-        Want the service to support multiple time zones?
-        Just add the method below to <code>TimeService.java</code> and then try requesting
-        something like <code>/time/est</code> to get the time in Eastern Standard Time.
-    </p>
-    <pre class="prettyprint once language-java">
-@GET
-@Path("/{timezone}")
-public Time get(@PathParam("timezone") String timezone) {
-    return new Time(TimeZone.getTimeZone(timezone.toUpperCase()));
-}
-</pre>
-</div>
-
-<div class="row tool-choice hide">
-    <div class="span3 offset1">
-        <a href="#" onclick="showInstructions('#eclipse-instructions')"><img src="https://s3.amazonaws.com/template-app-instructions-screenshots/eclipse/eclipse-thumbnail.png" alt="Using Eclipse" /></a>
-        <p><a href="#" onclick="showInstructions('#eclipse-instructions')" class="btn btn-primary btn-large">Using Eclipse</a></p>
-    </div>
-    <div class="span3">
-        <a href="#" onclick="showInstructions('#cli-instructions')"><img src="https://s3.amazonaws.com/template-app-instructions-screenshots/cli/cli-thumbnail.png" alt="Using Command Line" /></a>
-        <p>
-            <a href="#" onclick="showInstructions('#cli-instructions')" class="btn btn-primary btn-large">Using Command Line</a>
-        </p>
-    </div>
-</div>
-
-<div id="eclipse-instructions" class="instructions">
+<div id="eclipse-instructions" class="instructions tab-pane">
     <a name="using-eclipse"></a>
     <h1>Using Eclipse:</h1>
 
@@ -213,7 +190,7 @@ public Time get(@PathParam("timezone") String timezone) {
                 <li>Click <code>Generate RSA Key...</code>
                     <div class="modal hide" id="addingSshKey">
                         <div class="modal-header">
-                            <a class="close" data-dismiss="modal">×</a>
+                            <a class="close" data-dismiss="modal">Ã—</a>
                             <h3>Generate RSA Key</h3>
                         </div>
                         <div class="modal-body">
@@ -239,7 +216,7 @@ public Time get(@PathParam("timezone") String timezone) {
         <li>Go to <code>File</code> <i class="icon-chevron-right"></i> <code>Import...</code> <i class="icon-chevron-right"></i> <code>Git</code> <i class="icon-chevron-right"></i> <code>Projects from Git</code>
             <div class="modal hide" id="importFromGit">
                 <div class="modal-header">
-                    <a class="close" data-dismiss="modal">×</a>
+                    <a class="close" data-dismiss="modal">Ã—</a>
                     <h3>Import</h3>
                 </div>
                 <div class="modal-body">
@@ -257,7 +234,7 @@ public Time get(@PathParam("timezone") String timezone) {
         <li>Enter <code>git@heroku.com:<script>document.write(appname());</script>.git</code> in the <code>URI</code> field.
             <div class="modal hide" id="cloneGitRepository">
                 <div class="modal-header">
-                    <a class="close" data-dismiss="modal">×</a>
+                    <a class="close" data-dismiss="modal">Ã—</a>
                     <h3>Clone Git Repository</h3>
                 </div>
                 <div class="modal-body">
@@ -279,7 +256,7 @@ public Time get(@PathParam("timezone") String timezone) {
         <li>Choose <code>Import as general project</code>
             <div class="modal hide" id="importProjectsFromGit">
                 <div class="modal-header">
-                    <a class="close" data-dismiss="modal">×</a>
+                    <a class="close" data-dismiss="modal">Ã—</a>
                     <h3>Import Projects from Git</h3>
                 </div>
                 <div class="modal-body">
@@ -304,11 +281,14 @@ public Time get(@PathParam("timezone") String timezone) {
 
     <h2>Step 4. Makes some changes to the app</h2>
     <ol>
-        <li>Open <code>HelloServlet.java</code></li>
-        <li>Modify line 20 with:
-            <code>
-                out.write("Deployed first change!".getBytes());
-            </code>
+        <li>Open <code>src/main/java/TimeService.java</code></li>
+        <li>To add a new resource path that supports specific time zones (e.g. <code>GET /time/est</code> for the time in Eastern Standard Time), add this method:
+            <pre class="prettyprint once language-java">
+@GET
+@Path("/{timezone}")
+public Time get(@PathParam("timezone") String timezone) {
+    return new Time(TimeZone.getTimeZone(timezone.toUpperCase()));
+}</pre>
         </li>
     </ol>
 
@@ -318,7 +298,7 @@ public Time get(@PathParam("timezone") String timezone) {
         <li>Enter a commit message and click <code>Commit</code>
             <div class="modal hide" id="commitChanges">
                 <div class="modal-header">
-                    <a class="close" data-dismiss="modal">×</a>
+                    <a class="close" data-dismiss="modal">Ã—</a>
                     <h3>Commit Changes</h3>
                 </div>
                 <div class="modal-body">
@@ -336,7 +316,7 @@ public Time get(@PathParam("timezone") String timezone) {
         <li>Review the push results. At the bottom, a "... deployed to Heroku" message will appear.
             <div class="modal hide" id="pushResults">
                 <div class="modal-header">
-                    <a class="close" data-dismiss="modal">×</a>
+                    <a class="close" data-dismiss="modal">Ã—</a>
                     <h3>Push Results</h3>
                 </div>
                 <div class="modal-body">
@@ -355,11 +335,11 @@ public Time get(@PathParam("timezone") String timezone) {
     <div class="hero-unit">
         <h1>Done!</h1>
         <p>You've just cloned, modified, and deployed a brand new app.</p>
-        <a href="/hello" class="btn btn-primary btn-large">See your changes</a>
+        <a href="/" class="btn btn-primary btn-large">See your changes</a>
     </div>
-</div>
+</div> <!-- End Eclipse tab-->
 
-<div id="cli-instructions" class="instructions">
+<div id="cli-instructions" class="instructions tab-pane">
     <a name="using-cli"></a>
     <h1>Using Command Line:</h1>
 
@@ -390,12 +370,15 @@ Authentication successful.</pre>
 
     <h2>Step 4. Makes some changes to the app</h2>
     <ol>
-        <li><script>document.write("<code>cd " + appname() + "</code>")</script></li>
-        <li>Open <code>src/main/java/HelloServlet.java</code> with your favorite editor</li>
-        <li>Modify line 20 with:
-            <code>
-                out.write("Deployed first change!".getBytes());
-            </code>
+        <li>Open <code>src/main/java/TimeService.java</code> in your favorite editor.</li>
+        <li>To add a new resource path that supports specific time zones (e.g. <code>GET /time/est</code>
+            for the time in Eastern Standard Time), add this method:
+            <pre class="prettyprint once language-java">
+@GET
+@Path("/{timezone}")
+public Time get(@PathParam("timezone") String timezone) {
+    return new Time(TimeZone.getTimeZone(timezone.toUpperCase()));
+}</pre>
         </li>
     </ol>
 
@@ -411,14 +394,26 @@ Authentication successful.</pre>
     <div class="hero-unit">
         <h1>Done!</h1>
         <p>You've just cloned, modified, and deployed a brand new app.</p>
-        <a href="/hello" class="btn btn-primary btn-large">See your changes</a>
+        <a href="/" class="btn btn-primary btn-large">See your changes</a>
     </div>
+</div> <!-- End CLI tab -->
+
+</div> <!-- end tab content -->
 </div>
+
+
+
+</div>
+
+
+</div>
+
 </div>
 </div>
 </div>
 
 <script src="http://twitter.github.com/bootstrap/assets/js/jquery.js"></script>
+<script src="http://twitter.github.com/bootstrap/assets/js/bootstrap-tab.js"></script>
 <script src="http://twitter.github.com/bootstrap/assets/js/bootstrap-modal.js"></script>
 <script src="http://twitter.github.com/bootstrap/assets/js/google-code-prettify/prettify.js"></script>
 </body>
