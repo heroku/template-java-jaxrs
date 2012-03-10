@@ -59,10 +59,9 @@
             $(eid).show();
         }
 
-        function getUrlParameter(name, defaultValue) {
-            var regex = new RegExp("[\\?&]" + name.replace(/[\[]/, "\\\[").replace(/[\]]/, "\\\]") + "=([^&#]*)");
-            var results = regex.exec(window.location.search);
-            return results == null ? defaultValue : decodeURIComponent(results[1].replace(/\+/g, " "));
+        function openRestClient(startUrl) {
+            $('#rest-url').val(startUrl);
+            $('#rest-client-tab').click();
         }
 
         function sendGetRequest() {
@@ -134,14 +133,14 @@
 </div>
 
 <ul id="tab" class="nav nav-tabs">
-    <li><a id="eclipse-instructions-tab" href="#eclipse-instructions" data-toggle="tab">Use Eclipse</a></li>
+    <li class="active"><a id="eclipse-instructions-tab" href="#eclipse-instructions" data-toggle="tab">Use Eclipse</a></li>
     <li><a id="cli-instructions-tab" href="#cli-instructions" data-toggle="tab">Use Command Line</a></li>
     <li><a id="rest-client-tab" href="#rest-client" data-toggle="tab">Example REST Client</a></li>
 </ul>
 
 <div class="tab-content">
 
-<div id="eclipse-instructions" class="instructions tab-pane">
+<div id="eclipse-instructions" class="instructions tab-pane active">
     <a name="using-eclipse"></a>
     <h1>Using Eclipse:</h1>
 
@@ -301,7 +300,7 @@ public Time get(@PathParam("timezone") String timezone) {
     <div class="hero-unit">
         <h1>Done!</h1>
         <p>You've just cloned, modified, and deployed a brand new app.</p>
-        <a href="/?start_tab=rest-client&default_rest_url=/time/est" class="btn btn-primary btn-large">See your changes</a>
+        <a href="#" onclick="openRestClient('/time/est');" class="btn btn-primary btn-large">See your changes</a>
     </div>
 </div> <!-- End Eclipse tab-->
 
@@ -360,7 +359,7 @@ public Time get(@PathParam("timezone") String timezone) {
     <div class="hero-unit">
         <h1>Done!</h1>
         <p>You've just cloned, modified, and deployed a brand new app.</p>
-        <a href="/?start_tab=rest-client&default_rest_url=/time/est" class="btn btn-primary btn-large">See your changes</a>
+        <a href="#" onclick="openRestClient('/time/est');" class="btn btn-primary btn-large">See your changes</a>
     </div>
 </div> <!-- End CLI tab -->
 
@@ -370,7 +369,7 @@ public Time get(@PathParam("timezone") String timezone) {
         <form class="form-horizontal" class="row-fluid">
             <fieldset>
                 <label class="control-label search-query" for="rest-url"><strong>URL</strong></label>
-                <input id="rest-url" type="text">
+                <input id="rest-url" type="text" value="/time">
                 <button type="submit" class="btn btn-primary" onclick="sendGetRequest(); return false;">GET</button>
             </fieldset>
         </form>
@@ -407,11 +406,5 @@ public Time get(@PathParam("timezone") String timezone) {
 <script src="http://twitter.github.com/bootstrap/assets/js/bootstrap-tab.js"></script>
 <script src="http://twitter.github.com/bootstrap/assets/js/bootstrap-modal.js"></script>
 <script src="http://twitter.github.com/bootstrap/assets/js/google-code-prettify/prettify.js"></script>
-<script type="text/javascript">
-    $(function() {
-        $('#rest-url').val(getUrlParameter('default_rest_url', '/time'));
-        $('#' + getUrlParameter('start_tab', 'eclipse-instructions') + '-tab').click();
-    });
-</script>
 </body>
 </html>
