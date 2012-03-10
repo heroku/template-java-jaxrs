@@ -59,13 +59,10 @@
             $(eid).show();
         }
 
-        function initDefaultRestUrl() {
-            var url = '/time';
-            var param = 'default_rest_url=';
-            if (location.href.indexOf(param) > -1) {
-                url = location.href.substring(location.href.indexOf(param) + param.length);
-            }
-            $('#rest-url').val(url)
+        function getUrlParameter(name, defaultValue) {
+            var regex = new RegExp("[\\?&]" + name.replace(/[\[]/, "\\\[").replace(/[\]]/, "\\\]") + "=([^&#]*)");
+            var results = regex.exec(window.location.search);
+            return results == null ? defaultValue : decodeURIComponent(results[1].replace(/\+/g, " "));
         }
 
         function sendGetRequest() {
@@ -132,42 +129,17 @@
 
 <div style="margin-bottom: 20px">
     This app is a simple RESTful service for getting the current time with JAX-RS.
-    Use the REST Client below to send a <code>GET</code> request to <code>/time</code>.
+    Use the example REST client below to send a <code>GET</code> request to <code>/time</code>.
     Then use Eclipse or the Command Line to deploy some changes.
 </div>
 
 <ul id="tab" class="nav nav-tabs">
-    <li class="active"><a href="#rest-client" data-toggle="tab">REST Client</a></li>
-    <li><a href="#eclipse-instructions" data-toggle="tab">Use Eclipse</a></li>
-    <li><a href="#cli-instructions" data-toggle="tab">Use Command Line</a></li>
+    <li><a id="eclipse-instructions-tab" href="#eclipse-instructions" data-toggle="tab">Use Eclipse</a></li>
+    <li><a id="cli-instructions-tab" href="#cli-instructions" data-toggle="tab">Use Command Line</a></li>
+    <li><a id="rest-client-tab" href="#rest-client" data-toggle="tab">Example REST Client</a></li>
 </ul>
 
 <div class="tab-content">
-
-<div id="rest-client" class="tab-pane active">
-    <h1>REST Client</h1>
-    <div id="rest-client-widget" style="margin: 10px">
-        <form class="form-horizontal" class="row-fluid">
-            <fieldset>
-                <label class="control-label search-query" for="rest-url"><strong>URL</strong></label>
-                <input id="rest-url" type="text">
-                <button type="submit" class="btn btn-primary" onclick="sendGetRequest(); return false;">GET</button>
-            </fieldset>
-        </form>
-
-        <div id="rest-result-container" class="row hide">
-            <div class="row">
-                <div id="rest-result-header" class="offset2 span1 alert">
-                    <a id="rest-result-close-btn" class="close" data-dismiss="alert" onclick="$('#rest-result-container').hide();">×</a>
-                    <span id="rest-result-header-text"></span>
-                </div>
-            </div>
-            <div class="row">
-                <pre id="rest-result-body" class="offset2 span4 prettyprint language-json"></pre>
-            </div>
-        </div>
-    </div>
-</div>
 
 <div id="eclipse-instructions" class="instructions tab-pane">
     <a name="using-eclipse"></a>
@@ -329,13 +301,13 @@ public Time get(@PathParam("timezone") String timezone) {
     <div class="hero-unit">
         <h1>Done!</h1>
         <p>You've just cloned, modified, and deployed a brand new app.</p>
-        <a href="/?default_rest_url=/time/est" class="btn btn-primary btn-large">See your changes</a>
+        <a href="/?start_tab=rest-client&default_rest_url=/time/est" class="btn btn-primary btn-large">See your changes</a>
     </div>
 </div> <!-- End Eclipse tab-->
 
 <div id="cli-instructions" class="instructions tab-pane">
     <a name="using-cli"></a>
-    <h1>Using Command Line:</h1>
+    <h1>Using the Command Line:</h1>
 
     <h2>Step 1. Setup your environment</h2>
     <ol>
@@ -388,9 +360,34 @@ public Time get(@PathParam("timezone") String timezone) {
     <div class="hero-unit">
         <h1>Done!</h1>
         <p>You've just cloned, modified, and deployed a brand new app.</p>
-        <a href="/?default_rest_url=/time/est" class="btn btn-primary btn-large">See your changes</a>
+        <a href="/?start_tab=rest-client&default_rest_url=/time/est" class="btn btn-primary btn-large">See your changes</a>
     </div>
 </div> <!-- End CLI tab -->
+
+<div id="rest-client" class="tab-pane">
+    <h1>REST Client</h1>
+    <div id="rest-client-widget" style="margin: 10px">
+        <form class="form-horizontal" class="row-fluid">
+            <fieldset>
+                <label class="control-label search-query" for="rest-url"><strong>URL</strong></label>
+                <input id="rest-url" type="text">
+                <button type="submit" class="btn btn-primary" onclick="sendGetRequest(); return false;">GET</button>
+            </fieldset>
+        </form>
+
+        <div id="rest-result-container" class="row hide">
+            <div class="row">
+                <div id="rest-result-header" class="offset2 span1 alert">
+                    <a id="rest-result-close-btn" class="close" data-dismiss="alert" onclick="$('#rest-result-container').hide();">×</a>
+                    <span id="rest-result-header-text"></span>
+                </div>
+            </div>
+            <div class="row">
+                <pre id="rest-result-body" class="offset2 span4 prettyprint language-json"></pre>
+            </div>
+        </div>
+    </div>
+</div> <!-- end Rest Client tab -->
 
 </div> <!-- end tab content -->
 </div>
@@ -412,7 +409,8 @@ public Time get(@PathParam("timezone") String timezone) {
 <script src="http://twitter.github.com/bootstrap/assets/js/google-code-prettify/prettify.js"></script>
 <script type="text/javascript">
     $(function() {
-        initDefaultRestUrl();
+        $('#rest-url').val(getUrlParameter('default_rest_url', '/time'));
+        $('#' + getUrlParameter('start_tab', 'eclipse-instructions') + '-tab').click();
     });
 </script>
 </body>
