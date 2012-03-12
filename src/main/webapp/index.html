@@ -49,16 +49,6 @@
             return location.hostname.substring(0,location.hostname.indexOf("."));
         }
 
-        function showInstructions(eid) {
-            var instructions = ["#eclipse-instructions", "#cli-instructions"];
-            for (i in instructions) {
-                if (instructions[i] != eid) {
-                    $(instructions[i]).hide();
-                }
-            }
-            $(eid).show();
-        }
-
         function openRestClient(startUrl) {
             $('#rest-url').val(startUrl);
             $('#rest-result-container').hide();
