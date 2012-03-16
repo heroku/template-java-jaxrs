@@ -246,6 +246,12 @@
 public Time get(@PathParam("timezone") String timezone) {
     return new Time(TimeZone.getTimeZone(timezone.toUpperCase()));
 }</pre>
+
+            Be sure to also add the necessary import statements:
+            <pre class="prettyprint once language-java">
+import javax.ws.rs.PathParam;
+import java.util.TimeZone;
+</pre>
         </li>
     </ol>
 
@@ -339,6 +345,12 @@ Authentication successful.</pre>
 public Time get(@PathParam("timezone") String timezone) {
     return new Time(TimeZone.getTimeZone(timezone.toUpperCase()));
 }</pre>
+
+            Be sure to also add the necessary import statements:
+            <pre class="prettyprint once language-java">
+import javax.ws.rs.PathParam;
+import java.util.TimeZone;
+</pre>
         </li>
     </ol>
 
