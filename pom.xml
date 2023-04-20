@@ -13,7 +13,7 @@
         <dependency>
             <groupId>org.eclipse.jetty</groupId>
             <artifactId>jetty-servlet</artifactId>
-            <version>7.6.0.v20120127</version>
+            <version>9.4.51.v20230217</version>
         </dependency>
         <dependency>
             <groupId>org.eclipse.jetty</groupId>
@@ -79,7 +79,7 @@
                                         </goals>
                                     </pluginExecutionFilter>
                                     <action>
-                                        <execute />
+                                        <execute/>
                                     </action>
                                 </pluginExecution>
                             </pluginExecutions>
